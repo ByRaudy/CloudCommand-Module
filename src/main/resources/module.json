@@ -1,0 +1,10 @@
+{
+  "name": "ByRaudy-CloudCommand",
+  "author": "ByRaudy",
+  "mainClass": "dev.jxnnik.cloudcommand.CloudCommand",
+  "moduleCopyType": "PROXY",
+  "repositories": [],
+  "dependencies": [],
+  "depend": [],
+  "softDepend": []
+}
