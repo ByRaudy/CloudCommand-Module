@@ -139,18 +139,18 @@ public class VelocityCloudCommand {
             playerPermissionGroupInfo = PermissionPool.getInstance().getPermissionPlayerManager().getPermissionPlayer(iCloudPlayer.getName()).getBlockingOrNull().getPermissionGroupInfoList().stream().toList().get(1);
         }
 
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7" + iCloudPlayer.getName() + " §8/ §7" + iCloudPlayer.getUniqueId()));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>" + iCloudPlayer.getName() + " <dark_gray>/ <gray>" + iCloudPlayer.getUniqueId()));
         if (playerPermissionGroupInfo.getTimeoutTimestamp() == -1) {
-            context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7" + playerPermissionGroupInfo.getPermissionGroupName() + " §8/ §4§lPermanent"));
+            context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>" + playerPermissionGroupInfo.getPermissionGroupName() + " <dark_gray>/ <dark_red><bold>Permanent</bold>"));
         } else {
-            context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7" + playerPermissionGroupInfo.getPermissionGroupName() + " §8/ §e" + simpleDateFormatDate.format(new Date(playerPermissionGroupInfo.getTimeoutTimestamp())).replace(":", ".")));
+            context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>" + playerPermissionGroupInfo.getPermissionGroupName() + " <dark_gray>/ <yellow>" + simpleDateFormatDate.format(new Date(playerPermissionGroupInfo.getTimeoutTimestamp())).replace(":", ".")));
         }
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7First login§8: §7" + simpleDateFormatDate.format(new Date(iCloudPlayer.getFirstLogin())).replace(":", ".") + " §8/ §7Last login§8: §7" + simpleDateFormatDate.format(new Date(iCloudPlayer.getLastLogin())).replace(":", ".")));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>First login<dark_gray>: <gray>" + simpleDateFormatDate.format(new Date(iCloudPlayer.getFirstLogin())).replace(":", ".") + " <dark_gray>/ <gray>Last login<dark_gray>: <gray>" + simpleDateFormatDate.format(new Date(iCloudPlayer.getLastLogin())).replace(":", ".")));
         return 1;
     }
 
     private int sendOnlineCloudPlayers(CommandContext<CommandSource> context) {
-        CloudAPI.getInstance().getCloudPlayerManager().getAllCachedObjects().forEach(iCloudPlayer -> context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7" + iCloudPlayer.getName() + " §8/ §7" + iCloudPlayer.getUniqueId() + " §8/ §7" + iCloudPlayer.getConnectedServerName())));
+        CloudAPI.getInstance().getCloudPlayerManager().getAllCachedObjects().forEach(iCloudPlayer -> context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>" + iCloudPlayer.getName() + " <dark_gray>/ <gray>" + iCloudPlayer.getUniqueId() + " <dark_gray>/ <gray>" + iCloudPlayer.getConnectedServerName())));
         return 1;
     }
 
@@ -168,13 +168,13 @@ public class VelocityCloudCommand {
         for (int i = 0; i < count; i++) {
             iCloudServiceGroup.startNewService();
         }
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7Please wait until all services started successfully§8!"));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>Please wait until all services started successfully<dark_gray>!"));
         return 1;
     }
 
     private int shutdownCloudService(CommandContext<CommandSource> context, ICloudService iCloudService) {
         iCloudService.shutdown();
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§e" + iCloudService.getName() + " §7will be stopped§8."));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<yellow>" + iCloudService.getName() + " <gray>will be stopped<dark_gray>."));
         return 1;
     }
 
@@ -185,23 +185,23 @@ public class VelocityCloudCommand {
 
     private int listInfoCloudService(CommandContext<CommandSource> context, ICloudService iCloudService) {
         context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + ""));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7Info of §e" + iCloudService.getName() + "§8(§e" + iCloudService.getServiceGroup().getName() + "§8)"));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>Info of <yellow>" + iCloudService.getName() + "<dark_gray>(<yellow>" + iCloudService.getServiceGroup().getName() + "<dark_gray>)"));
         context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + ""));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7IP§8: §e" + iCloudService.getHost() + " §8/ §7Port§8: §e" + iCloudService.getPort()));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7Online players§8: §e" + iCloudService.getOnlineCount() + " §8/ §7Max players§8: §e" + iCloudService.getMaxPlayers()));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7Used Memory§8: §e" + iCloudService.getUsedMemory() + " §8/ §7Max Memory§8: §e" + iCloudService.getMaxMemory()));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7MOTD§8: §e" + iCloudService.getMOTD()));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7Node§8: §e" + iCloudService.getWrapper().getName() + " §8(§7IP§8: §e" + iCloudService.getWrapper().getHost() + " §8| §7Used Memory§8: §e" + iCloudService.getWrapper().getUsedMemory() + " §8| §7Max Memory§8: §e" + iCloudService.getWrapper().getMaxMemory() + "§8)"));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7ServiceType§8: §e" + iCloudService.getServiceType() + " §8/ §7State§8: §e" + iCloudService.getState()));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>IP<dark_gray>: <yellow>" + iCloudService.getHost() + " <dark_gray>/ <gray>Port<dark_gray>: <yellow>" + iCloudService.getPort()));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>Online players<dark_gray>: <yellow>" + iCloudService.getOnlineCount() + " <dark_gray>/ <gray>Max players<dark_gray>: <yellow>" + iCloudService.getMaxPlayers()));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>Used Memory<dark_gray>: <yellow>" + iCloudService.getUsedMemory() + " <dark_gray>/ <gray>Max Memory<dark_gray>: <yellow>" + iCloudService.getMaxMemory()));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>MOTD<dark_gray>: <yellow>" + iCloudService.getMOTD()));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>Node<dark_gray>: <yellow>" + iCloudService.getWrapper().getName() + " <dark_gray>(<gray>IP<dark_gray>: <yellow>" + iCloudService.getWrapper().getHost() + " <dark_gray>| <gray>Used Memory<dark_gray>: <yellow>" + iCloudService.getWrapper().getUsedMemory() + " <dark_gray>| <gray>Max Memory<dark_gray>: <yellow>" + iCloudService.getWrapper().getMaxMemory() + "<dark_gray>)"));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>ServiceType<dark_gray>: <yellow>" + iCloudService.getServiceType() + " <dark_gray>/ <gray>State<dark_gray>: <yellow>" + iCloudService.getState()));
         context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + ""));
         return 1;
     }
 
     private int listOnlineCloudServices(CommandContext<CommandSource> context) {
         context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + ""));
-        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7List of all online ICloudServices"));
+        context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>List of all online ICloudServices"));
         context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + ""));
-        CloudAPI.getInstance().getCloudServiceManager().getAllCachedObjects().forEach(iCloudService -> context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "§7" + iCloudService.getName() + "§8(§7" + iCloudService.getGroupName() + "§8) §8/ §7ServiceState§8: §e" + iCloudService.getState() + " §8/ §7Online players§8: §e" + iCloudService.getOnlineCount() + " §8| §7Max players§8: §e" + iCloudService.getMaxPlayers())));
+        CloudAPI.getInstance().getCloudServiceManager().getAllCachedObjects().forEach(iCloudService -> context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + "<gray>" + iCloudService.getName() + "<dark_gray>(<gray>" + iCloudService.getGroupName() + "<dark_gray>) <dark_gray>/ <gray>ServiceState<dark_gray>: <yellow>" + iCloudService.getState() + " <dark_gray>/ <gray>Online players<dark_gray>: <yellow>" + iCloudService.getOnlineCount() + " <dark_gray>| <gray>Max players<dark_gray>: <yellow>" + iCloudService.getMaxPlayers())));
         context.getSource().sendMessage(MiniMessage.miniMessage().deserialize(moduleConfig.getString("prefix") + ""));
         return 1;
     }
